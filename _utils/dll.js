@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const dllConfig = require(`${__dirname}/../webpack/dll.config`);
 const packageConfig = require('../package.config');
 const options = require('./options');
+const ora = require('ora');
 
 // 生成dll
 module.exports = function packDll(fn) {
@@ -18,6 +19,9 @@ module.exports = function packDll(fn) {
       new webpack.optimize.UglifyJsPlugin(packageConfig.UglifyJsPlugin)
     );
   }
+  const spinner = ora('Packing dll...');
+
+  spinner.start();
 
   webpack(dllConfig, function (err) {
     if (err) {
@@ -25,6 +29,7 @@ module.exports = function packDll(fn) {
     }
     // stats
     (fn ? fn() : '');
-    console.log(chalk.green(`dll has packed successfully!`));
+    spinner.stop();
+    console.log(chalk.green(`Dll has packed successfully!`));
   });
 };

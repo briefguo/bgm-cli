@@ -12,8 +12,6 @@ const __dependencies = Object.keys(packageJSON.dependencies);
 const __distPath = path.resolve(packageConfig.distPath);
 const __corePath = path.resolve(packageConfig.corePath);
 
-console.log(__dependencies);
-
 module.exports = merge(baseConfig, {
   entry: {
     dll: __dependencies

@@ -12,8 +12,6 @@ const __distPath = path.resolve(packageConfig.distPath);
 const __corePath = path.resolve(packageConfig.corePath);
 const __devJSloader = packageConfig.devJSloader;
 
-console.log(__devJSloader);
-
 module.exports = merge(baseConfig, {
   entry: [
     'webpack/hot/dev-server',
@@ -40,7 +38,14 @@ module.exports = merge(baseConfig, {
           localIdentName: '[name]-[local]-[hash:base64:5]'
         }
       }, {
-        loader: 'postcss-loader'
+        loader: 'postcss-loader',
+        options: {
+          plugins: () => [
+            autoprefixer({
+              browsers: ['> 5%']
+            })
+          ]
+        }
       }],
       include: [__clientPath, __commonPath]
     }, {
@@ -74,16 +79,6 @@ module.exports = merge(baseConfig, {
     new webpack.DllReferencePlugin({
       // context: path.resolve(__dirname, 'dist'),
       manifest: require(path.resolve(__distPath, 'dll-manifest.json')),
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        // context: __clientPath,
-        postcss: [ // <---- postcss configs go here under LoadOptionsPlugin({ options: { ??? } })
-          autoprefixer({
-            browsers: ['> 5%']
-          }),
-        ]
-      }
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__distPath, 'entry.html'),

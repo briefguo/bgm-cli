@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 const fetch = require('isomorphic-fetch');
+const ora = require('ora');
 
 const { toolServer, resource } = require(`${__dirname}/../package.config.js`);
 const options = require(`${__dirname}/../_utils/options`);
@@ -13,7 +14,8 @@ function saveSome(something) {
       method: 'GET'
     }
   ];
-
+  const spinner = ora(`fetching ${something}...`);
+  spinner.start();
   fetch(...args)
     .then(res => res.json())
     .then(json => {
@@ -23,6 +25,7 @@ function saveSome(something) {
             console.log(chalk.red(err));
             process.exit();
           }
+          spinner.stop();
           console.log(chalk.green(`fetch ${something} successfully!`));
         });
       });

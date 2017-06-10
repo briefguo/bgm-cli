@@ -4,6 +4,7 @@ var packageConfig = require('../package.config');
 const __clientPath = path.resolve(packageConfig.clientPath);
 const __commonPath = path.resolve(packageConfig.commonPath);
 const __node_modules = path.resolve('node_modules'); //node地址
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   module: {
@@ -56,5 +57,10 @@ module.exports = {
       // modules aliases are imported relative to the current context
     },
   },
-  plugins: []
+  plugins: [
+    new CopyWebpackPlugin([{
+      from: 'common/images',
+      to: 'images'
+    }])
+  ]
 };

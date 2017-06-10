@@ -1,3 +1,4 @@
+const ora = require('ora');
 const chalk = require('chalk');
 const webpack = require('webpack');
 
@@ -18,11 +19,13 @@ function packProd() {
     }),
     new webpack.optimize.UglifyJsPlugin(packageConfig.UglifyJsPlugin)
   );
+  const spinner = ora('building...');
+  spinner.start();
   webpack(prodConfig, function (err) {
     if (err) {
       throw new Error('webpack', err);
     }
-    
+    spinner.stop();
     console.log(chalk.green(`build successfully!`));
     process.exit();
   });

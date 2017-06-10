@@ -35,7 +35,14 @@ module.exports = merge(baseConfig, {
             localIdentName: '[name]-[local]-[hash:base64:5]'
           }
         }, {
-          loader: 'postcss-loader'
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              autoprefixer({
+                browsers: ['> 5%']
+              })
+            ]
+          }
         }],
       }),
       include: [__clientPath, __commonPath]
@@ -67,16 +74,6 @@ module.exports = merge(baseConfig, {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      options: {
-        // context: __clientPath,
-        postcss: [ // <---- postcss configs go here under LoadOptionsPlugin({ options: { ??? } })
-          autoprefixer({
-            browsers: ['> 5%']
-          }),
-        ]
       }
     }),
     new ExtractTextPlugin('styles_[chunkhash].css'),
