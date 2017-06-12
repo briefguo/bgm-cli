@@ -9,6 +9,17 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   module: {
     rules: [{
+      test: /\.md$/,
+      use: [{
+        loader: 'html-loader',
+        options: {
+          attrs: false
+        }
+      }, {
+        loader: 'markdown-loader'
+      }],
+      exclude: /node_modules/
+    }, {
       test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
       use: [{
         loader: 'url-loader',

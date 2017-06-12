@@ -1,13 +1,25 @@
 {
   "name": "bgm-cli",
-  "version": "1.1.1",
+  "version": "1.1.4",
   "main": "bin/bgm",
   "bin": {
     "bgm": "bin/bgm"
   },
   "dependencies": {
+    "chalk": "^1.1.3",
+    "cli-table": "^0.3.1",
+    "commander": "^2.9.0",
+    "del": "^2.2.2",
+    "download-git-repo": "^1.0.1",
+    "inquirer": "^3.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "ora": "^1.2.0"
+  },
+  "devDependencies": {
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.25.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^7.0.0",
     "babel-plugin-import": "^1.1.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -15,26 +27,19 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "babel-eslint": "^7.1.1",
-    "babel-loader": "^7.0.0",
     "browser-sync": "^2.18.12",
-    "chalk": "^1.1.3",
-    "cli-table": "^0.3.1",
-    "commander": "^2.9.0",
     "connect-history-api-fallback": "^1.3.0",
     "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.28.4",
-    "del": "^2.2.2",
-    "download-git-repo": "^1.0.1",
+    "less": "^2.7.2",
     "eslint": "^2.13.0",
+    "eslint-plugin-react": "^5.2.2",
     "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.28.0",
-    "inquirer": "^3.1.0",
-    "isomorphic-fetch": "^2.2.1",
-    "less": "^2.7.2",
     "less-loader": "^4.0.4",
-    "ora": "^1.2.0",
+    "markdown-loader": "^2.0.0",
+    "css-loader": "^0.28.4",
     "postcss-loader": "^2.0.5",
     "react-hot-loader": "^1.3.1",
     "style-loader": "^0.18.2",
@@ -42,11 +47,7 @@
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0",
-    "webpack-merge": "^4.1.0",
-    "eslint-plugin-react": "^5.2.2"
-  },
-  "devDependencies": {
-
+    "webpack-merge": "^4.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

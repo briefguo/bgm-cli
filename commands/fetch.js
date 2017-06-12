@@ -4,13 +4,13 @@ const path = require('path');
 const fetch = require('isomorphic-fetch');
 const ora = require('ora');
 
-const { toolServer, resource } = require(`${__dirname}/../package.config.js`);
+const { resource } = require(`${__dirname}/../package.config.js`);
 const options = require(`${__dirname}/../_utils/options`);
 
 function saveSome(something) {
   // 保存API;
   const args = [
-    `${toolServer}/${something}`, {
+    `${something}`, {
       method: 'GET'
     }
   ];

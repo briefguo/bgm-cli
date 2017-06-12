@@ -1,4 +1,4 @@
-// const { remoteServer } = require('./package.json')
+const { remoteServer } = require('./package.json')
 
 module.exports = {
   // 输出目录
@@ -9,8 +9,6 @@ module.exports = {
   clientPath: './client',
   // 核心目录
   corePath: './client/_Root',
-  // 工具server
-  toolServer: "http://172.16.0.19:3008",
   // browserSync配置
   'browserSync': {
     port: 3000,
@@ -24,18 +22,18 @@ module.exports = {
   }],
   // 静态资源配置
   resource: {
-    'svg': [{
+    [`${remoteServer}/svg`]: [{
       target: './common/svg/SVG.html',
       format: json => json.data
     }],
-    'menu': [{
+    [`${remoteServer}/menu`]: [{
       target: './common/menu/MENUS.json',
       format: json => JSON.stringify(json.data.menus)
     }, {
       target: './common/menu/PROJECTS.json',
       format: json => JSON.stringify(json.data.projects)
     }],
-    'api': [{
+    [`${remoteServer}/api`]: [{
       target: './common/api/data.json',
       format: json => JSON.stringify(json.data)
     }]
