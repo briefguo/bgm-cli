@@ -1,6 +1,6 @@
 {
   "name": "bgm-cli",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "main": "bin/bgm",
   "bin": {
     "bgm": "bin/bgm"
@@ -13,9 +13,7 @@
     "download-git-repo": "^1.0.1",
     "inquirer": "^3.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "ora": "^1.2.0"
-  },
-  "devDependencies": {
+    "ora": "^1.2.0",
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.1.1",
@@ -49,6 +47,7 @@
     "webpack-hot-middleware": "^2.18.0",
     "webpack-merge": "^4.1.0"
   },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
