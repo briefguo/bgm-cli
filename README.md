@@ -104,3 +104,5 @@ bgm build <host>
 ```shell
 bgm clean
 ```
+
+本项目fork自(scion)[<https://github.com/jrainlau/scion>]
