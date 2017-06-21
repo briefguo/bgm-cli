@@ -1,5 +1,3 @@
-const { remoteServer } = require('./package.json')
-
 module.exports = {
   // 输出目录
   distPath: './dist',
@@ -20,23 +18,33 @@ module.exports = {
   }, {
     loader: 'babel-loader'
   }],
+  remoteServer: 'http://localhost:3008',
   // 静态资源配置
   resource: {
-    [`${remoteServer}/svg`]: [{
-      target: './common/svg/SVG.html',
+    '/svg': [{
+      targetPath: `data/svg.html`,
       format: json => json.data
     }],
-    [`${remoteServer}/menu`]: [{
-      target: './common/menu/MENUS.json',
+    '/menu': [{
+      targetPath: `data/menus.json`,
       format: json => JSON.stringify(json.data.menus)
     }, {
-      target: './common/menu/PROJECTS.json',
+      targetPath: `data/projects.json`,
       format: json => JSON.stringify(json.data.projects)
     }],
-    [`${remoteServer}/api`]: [{
-      target: './common/api/data.json',
+    '/api': [{
+      targetPath: `data/api.json`,
       format: json => JSON.stringify(json.data)
-    }]
+    }],
+    '/config': [{
+      targetPath: `data/config.json`,
+      format: json => JSON.stringify(json)
+    }],
+    '/images': (json) => json.map(item => ({
+      type: 'blob',
+      originPath: `${item}`,
+      targetPath: `common/${item}`,
+    })),
   },
   // 加密配置
   UglifyJsPlugin: {
