@@ -62,6 +62,14 @@ module.exports = merge(baseConfig, {
       }),
       include: [__commonPath]
     }, {
+      test: /\.ts(x?)$/,
+      exclude: /node_modules/,
+      use: [{
+        loader: "babel-loader",
+      }, {
+        loader: 'ts-loader'
+      }]
+    }, {
       test: /\.js$/,
       use: [{
         loader: "babel-loader",

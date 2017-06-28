@@ -6,6 +6,16 @@ const __commonPath = path.resolve(packageConfig.commonPath);
 const __node_modules = path.resolve('node_modules'); //node地址
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+let hasCommonImages = null
+
+try {
+  const fs = require('fs')
+  fs.readFileSync(path.resolve('./common/images'))
+  hasCommonImages = true
+} catch (err) {
+  hasCommonImages = false
+}
+
 module.exports = {
   module: {
     rules: [{
@@ -48,7 +58,7 @@ module.exports = {
     modules: [__node_modules, __commonPath, __clientPath],
     // directories where to look for modules
 
-    extensions: [".js", ".json", ".md", ".html", ".css", ".less"],
+    extensions: ['.ts', '.tsx', ".js", ".json", ".md", ".html", ".css", ".less"],
     // extensions that are used
 
     alias: {
@@ -68,10 +78,10 @@ module.exports = {
       // modules aliases are imported relative to the current context
     },
   },
-  plugins: [
+  plugins: hasCommonImages ? [
     new CopyWebpackPlugin([{
       from: 'common/images',
       to: 'images'
     }])
-  ]
+  ] : []
 };

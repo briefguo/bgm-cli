@@ -62,6 +62,16 @@ module.exports = merge(baseConfig, {
       }],
       include: [__commonPath]
     }, {
+      test: /\.ts(x?)$/,
+      exclude: /node_modules/,
+      use: __devJSloader.concat([{
+        loader: 'ts-loader',
+        options: {
+          configFileName: 'tsconfig.json',
+          transpileOnly: true
+        }
+      }])
+    }, {
       test: /\.js$/,
       use: __devJSloader ? __devJSloader : [{
         loader: "babel-loader",

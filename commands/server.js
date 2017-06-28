@@ -28,7 +28,10 @@ function startServer() {
       middleware: [
         connectHistoryApiFallback(),
         devMiddleware,
-        webpackHotMiddleware(bundler)
+        webpackHotMiddleware(bundler, {
+          log: () => {},
+          heartbeat: 2000 // <== add this line
+        })
       ]
     }
   });
