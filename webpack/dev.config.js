@@ -10,6 +10,8 @@ const __clientPath = path.resolve(packageConfig.clientPath);
 const __commonPath = path.resolve(packageConfig.commonPath);
 const __distPath = path.resolve(packageConfig.distPath);
 const __corePath = path.resolve(packageConfig.corePath);
+const [assetsPath, assetsTargetPath] = packageConfig.assetsPath
+const __assetsPath = path.resolve(assetsPath)
 const __devJSloader = packageConfig.devJSloader;
 
 module.exports = merge(baseConfig, {
@@ -25,60 +27,101 @@ module.exports = merge(baseConfig, {
     path: __distPath
   },
   module: {
-    rules: [{
-      test: /\.css$/,
-      use: [{
-        loader: 'style-loader'
+    rules: [
+      /**** common和src下的css和less都做cssModule ****/
+      {
+        test: /\.css$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: {
+            minimize: true,
+            modules: true,
+            importLoaders: 1,
+            localIdentName: '[name]-[local]-[hash:base64:5]'
+          }
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              autoprefixer({
+                browsers: ['> 5%']
+              })
+            ]
+          }
+        }],
+        include: [__clientPath, __commonPath]
       }, {
-        loader: 'css-loader',
-        options: {
-          minimize: true,
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[name]-[local]-[hash:base64:5]'
-        }
+        test: /\.less$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: {
+            minimize: true,
+            modules: true,
+            importLoaders: 1,
+            localIdentName: '[name]-[local]-[hash:base64:5]'
+          }
+        }, {
+          loader: 'less-loader'
+        }],
+        include: [__clientPath, __commonPath]
+      },
+      /**** assets下的css和less不做cssModule ****/
+      {
+        test: /\.css$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: {
+            minimize: true
+          }
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              autoprefixer({
+                browsers: ['> 5%']
+              })
+            ]
+          }
+        }],
+        include: [__assetsPath]
       }, {
-        loader: 'postcss-loader',
-        options: {
-          plugins: () => [
-            autoprefixer({
-              browsers: ['> 5%']
-            })
-          ]
-        }
-      }],
-      include: [__clientPath, __commonPath]
-    }, {
-      test: /\.less$/,
-      use: [{
-        loader: 'style-loader'
+        test: /\.less$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: {
+            minimize: true
+          }
+        }, {
+          loader: 'less-loader'
+        }],
+        include: [__assetsPath]
       }, {
-        loader: 'css-loader',
-        options: {
-          minimize: true
-        }
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: __devJSloader.concat([{
+          loader: 'ts-loader',
+          options: {
+            configFileName: 'tsconfig.json',
+            transpileOnly: true
+          }
+        }])
       }, {
-        loader: 'less-loader'
-      }],
-      include: [__commonPath]
-    }, {
-      test: /\.ts(x?)$/,
-      exclude: /node_modules/,
-      use: __devJSloader.concat([{
-        loader: 'ts-loader',
-        options: {
-          configFileName: 'tsconfig.json',
-          transpileOnly: true
-        }
-      }])
-    }, {
-      test: /\.js$/,
-      use: __devJSloader ? __devJSloader : [{
-        loader: "babel-loader",
-      }],
-      include: [__clientPath, __commonPath],
-      exclude: /node_modules/
-    }]
+        test: /\.js$/,
+        use: __devJSloader ? __devJSloader : [{
+          loader: "babel-loader",
+        }],
+        include: [__clientPath, __commonPath],
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({

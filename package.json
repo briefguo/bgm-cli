@@ -1,11 +1,13 @@
 {
   "name": "bgm-cli",
-  "version": "1.1.14",
+  "version": "1.1.16",
   "main": "bin/bgm",
   "bin": {
     "bgm": "bin/bgm"
   },
   "dependencies": {
+    "@types/node": "^8.0.4",
+    "@types/webpack-env": "^1.13.0",
     "autoprefixer": "^7.1.1",
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.1.1",
@@ -42,6 +44,8 @@
     "react-hot-loader": "^1.3.1",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.2.0",
+    "tslint": "^5.4.3",
+    "tslint-react": "^3.0.0",
     "typescript": "^2.3.4",
     "url-loader": "^0.5.8",
     "webpack": "^2.6.1",

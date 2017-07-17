@@ -11,6 +11,7 @@ const __clientPath = path.resolve(packageConfig.clientPath);
 const __commonPath = path.resolve(packageConfig.commonPath);
 const __distPath = path.resolve(packageConfig.distPath);
 const __corePath = path.resolve(packageConfig.corePath);
+const [__assetsPath, __assetsTargetPath] = packageConfig.assetsPath
 
 module.exports = merge(baseConfig, {
   entry: [__corePath],
@@ -21,62 +22,105 @@ module.exports = merge(baseConfig, {
     filename: '[name]_[hash].js',
   },
   module: {
-    rules: [{
-      test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        fallback: "style-loader",
-        publicPath: __distPath,
-        use: [{
-          loader: 'css-loader',
-          options: {
-            minimize: true,
-            modules: true,
-            importLoaders: 1,
-            localIdentName: '[name]-[local]-[hash:base64:5]'
-          }
-        }, {
-          loader: 'postcss-loader',
-          options: {
-            plugins: () => [
-              autoprefixer({
-                browsers: ['> 5%']
-              })
-            ]
-          }
-        }],
-      }),
-      include: [__clientPath, __commonPath]
-    }, {
-      test: /\.less$/,
-      use: ExtractTextPlugin.extract({
-        fallback: "style-loader",
-        publicPath: __distPath,
-        use: [{
-          loader: 'css-loader',
-          options: {
-            minimize: true,
-          }
-        }, {
-          loader: 'less-loader'
-        }],
-      }),
-      include: [__commonPath]
-    }, {
-      test: /\.ts(x?)$/,
-      exclude: /node_modules/,
-      use: [{
-        loader: "babel-loader",
+    rules: [ /**** common和src下的css和less都做cssModule ****/ {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          publicPath: __distPath,
+          use: [{
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]-[local]-[hash:base64:5]'
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                autoprefixer({
+                  browsers: ['> 5%']
+                })
+              ]
+            }
+          }],
+        }),
+        include: [__clientPath, __commonPath]
       }, {
-        loader: 'ts-loader'
-      }]
-    }, {
-      test: /\.js$/,
-      use: [{
-        loader: "babel-loader",
-      }],
-      include: [__clientPath, __commonPath],
-      exclude: /node_modules/
-    }]
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          publicPath: __distPath,
+          use: [{
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]-[local]-[hash:base64:5]'
+            }
+          }, {
+            loader: 'less-loader'
+          }],
+        }),
+        include: [__clientPath, __commonPath]
+      },
+      /**** assets下的css和less不做cssModule ****/
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          publicPath: __distPath,
+          use: [{
+            loader: 'css-loader',
+            options: {
+              minimize: true
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [
+                autoprefixer({
+                  browsers: ['> 5%']
+                })
+              ]
+            }
+          }],
+        }),
+        include: [__assetsPath]
+      }, {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          publicPath: __distPath,
+          use: [{
+            loader: 'css-loader',
+            options: {
+              minimize: true
+            }
+          }, {
+            loader: 'less-loader'
+          }],
+        }),
+        include: [__assetsPath]
+      }, {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: [{
+          loader: "babel-loader",
+        }, {
+          loader: 'ts-loader'
+        }]
+      }, {
+        test: /\.js$/,
+        use: [{
+          loader: "babel-loader",
+        }],
+        include: [__clientPath, __commonPath],
+        exclude: /node_modules/
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({

@@ -12,12 +12,16 @@ module.exports = {
     port: 3000,
     open: false
   },
+
+  rootDirs: ['node_modules', './common', './client'],
+
   // dev环境的js加载配置
   devJSloader: [{
     loader: 'react-hot-loader'
   }, {
     loader: 'babel-loader'
   }],
+
   remoteServer: 'http://localhost:3008',
   // 静态资源配置
   resource: {

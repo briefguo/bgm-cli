@@ -1,16 +1,16 @@
 const path = require('path');
 
 var packageConfig = require('../package.config');
-const __clientPath = path.resolve(packageConfig.clientPath);
-const __commonPath = path.resolve(packageConfig.commonPath);
-const __node_modules = path.resolve('node_modules'); //node地址
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const __rootDirs = packageConfig.rootDirs;
+const [assetsPath, assetsTargetPath] = packageConfig.assetsPath
 
 let hasCommonImages = null
 
 try {
+  const _assetsPath = path.resolve(assetsPath);
   const fs = require('fs')
-  fs.readFileSync(path.resolve('./common/images'))
+  fs.readdirSync(_assetsPath)
   hasCommonImages = true
 } catch (err) {
   hasCommonImages = false
@@ -38,7 +38,7 @@ module.exports = {
           name: '[path][name].[ext]',
         }
       }],
-      include: [__commonPath],
+      // include: [__commonPath],
       exclude: /node_modules/
     }, {
       test: /\.html$/,
@@ -55,7 +55,7 @@ module.exports = {
     // options for resolving module requests
     // (does not apply to resolving to loaders)
 
-    modules: [__node_modules, __commonPath, __clientPath],
+    modules: __rootDirs,
     // directories where to look for modules
 
     extensions: ['.ts', '.tsx', ".js", ".json", ".md", ".html", ".css", ".less"],
@@ -80,8 +80,8 @@ module.exports = {
   },
   plugins: hasCommonImages ? [
     new CopyWebpackPlugin([{
-      from: 'common/images',
-      to: 'images'
+      from: assetsPath,
+      to: assetsTargetPath
     }])
   ] : []
 };
