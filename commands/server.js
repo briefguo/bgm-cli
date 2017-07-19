@@ -22,7 +22,10 @@ function startServer() {
     }
   });
 
-  const opts = Object.assign(packageConfig.browserSync, {
+  const opts = Object.assign({
+    port: 3000,
+    open: false
+  }, {
     server: {
       baseDir: __distPath,
       middleware: [

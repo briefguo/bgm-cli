@@ -7,22 +7,14 @@ module.exports = {
   clientPath: './client',
   // 核心目录
   corePath: './client/_Root',
-  // browserSync配置
-  'browserSync': {
-    port: 3000,
-    open: false
-  },
+
+  // 资源目录[origin,target]
+  assetsPath: ['./assets', 'assets'],
 
   rootDirs: ['node_modules', './common', './client'],
 
-  // dev环境的js加载配置
-  devJSloader: [{
-    loader: 'react-hot-loader'
-  }, {
-    loader: 'babel-loader'
-  }],
-
   remoteServer: 'http://localhost:3008',
+
   // 静态资源配置
   resource: {
     '/svg': [{
@@ -50,11 +42,4 @@ module.exports = {
       targetPath: `common/${item}`,
     })),
   },
-  // 加密配置
-  UglifyJsPlugin: {
-    compress: {
-      warnings: false,
-      drop_console: true
-    }
-  }
 };

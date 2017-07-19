@@ -10,9 +10,8 @@ const __clientPath = path.resolve(packageConfig.clientPath);
 const __commonPath = path.resolve(packageConfig.commonPath);
 const __distPath = path.resolve(packageConfig.distPath);
 const __corePath = path.resolve(packageConfig.corePath);
-const [assetsPath, assetsTargetPath] = packageConfig.assetsPath
+const [assetsPath] = packageConfig.assetsPath
 const __assetsPath = path.resolve(assetsPath)
-const __devJSloader = packageConfig.devJSloader;
 
 module.exports = merge(baseConfig, {
   entry: [
@@ -106,17 +105,23 @@ module.exports = merge(baseConfig, {
       }, {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: __devJSloader.concat([{
+        use: [{
+          loader: 'react-hot-loader'
+        }, {
+          loader: 'babel-loader'
+        }, {
           loader: 'ts-loader',
           options: {
             configFileName: 'tsconfig.json',
             transpileOnly: true
           }
-        }])
+        }]
       }, {
         test: /\.js$/,
-        use: __devJSloader ? __devJSloader : [{
-          loader: "babel-loader",
+        use: [{
+          loader: 'react-hot-loader'
+        }, {
+          loader: 'babel-loader'
         }],
         include: [__clientPath, __commonPath],
         exclude: /node_modules/

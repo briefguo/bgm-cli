@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 
 const options = require(`${__dirname}/../_utils/options`);
-const packageConfig = require(`${__dirname}/../package.config`);
+// const packageConfig = require(`${__dirname}/../package.config`);
 const dllDepend = require(`${__dirname}/../_utils/dllDepend`);
 
 // 生成dll
@@ -17,7 +17,12 @@ function packProd() {
         NODE_HOST: JSON.stringify(host),
       }
     }),
-    new webpack.optimize.UglifyJsPlugin(packageConfig.UglifyJsPlugin)
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        drop_console: true
+      }
+    })
   );
   const spinner = ora('building...');
   spinner.start();

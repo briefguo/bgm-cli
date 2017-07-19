@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const chalk = require('chalk');
 
 const dllConfig = require(`${__dirname}/../webpack/dll.config`);
-const packageConfig = require('../package.config');
 const options = require('./options');
 const ora = require('ora');
 
@@ -16,7 +15,12 @@ module.exports = function packDll(fn) {
           NODE_ENV: JSON.stringify('production'),
         }
       }),
-      new webpack.optimize.UglifyJsPlugin(packageConfig.UglifyJsPlugin)
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false,
+          drop_console: true
+        }
+      })
     );
   }
   const spinner = ora('Packing dll...');

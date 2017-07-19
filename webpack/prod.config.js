@@ -11,7 +11,8 @@ const __clientPath = path.resolve(packageConfig.clientPath);
 const __commonPath = path.resolve(packageConfig.commonPath);
 const __distPath = path.resolve(packageConfig.distPath);
 const __corePath = path.resolve(packageConfig.corePath);
-const [__assetsPath, __assetsTargetPath] = packageConfig.assetsPath
+const [assetsPath] = packageConfig.assetsPath
+const __assetsPath = path.resolve(assetsPath)
 
 module.exports = merge(baseConfig, {
   entry: [__corePath],

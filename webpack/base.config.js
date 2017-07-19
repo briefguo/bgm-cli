@@ -5,17 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const __rootDirs = packageConfig.rootDirs;
 const [assetsPath, assetsTargetPath] = packageConfig.assetsPath
 
-let hasCommonImages = null
-
-try {
-  const _assetsPath = path.resolve(assetsPath);
-  const fs = require('fs')
-  fs.readdirSync(_assetsPath)
-  hasCommonImages = true
-} catch (err) {
-  hasCommonImages = false
-}
-
 module.exports = {
   module: {
     rules: [{
@@ -78,10 +67,10 @@ module.exports = {
       // modules aliases are imported relative to the current context
     },
   },
-  plugins: hasCommonImages ? [
+  plugins: [
     new CopyWebpackPlugin([{
       from: assetsPath,
       to: assetsTargetPath
     }])
-  ] : []
+  ]
 };
