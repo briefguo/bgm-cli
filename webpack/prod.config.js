@@ -111,7 +111,11 @@ module.exports = merge(baseConfig, {
         use: [{
           loader: "babel-loader",
         }, {
-          loader: 'ts-loader'
+          loader: 'ts-loader',
+          options: {
+            configFileName: 'tsconfig.json',
+            transpileOnly: true
+          }
         }]
       }, {
         test: /\.js$/,
