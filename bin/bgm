@@ -1,97 +1,92 @@
 #!/usr/bin/env node
 
-process.env.NODE_PATH = __dirname + '/../node_modules/';
+process.env.NODE_PATH = __dirname + '/../node_modules/'
 
-const { resolve } = require('path');
-
-const res = command => resolve(__dirname, '../commands/', command);
-
-const program = require('commander');
+const { resolve } = require('path')
+const res = command => resolve(__dirname, '../src/commands/', command)
+const program = require('commander')
 
 program
-  .version(require('../package').version);
+  .version(require('../package').version)
 
 program
-  .usage('<command>');
-
-program
-  .command('add')
-  .description('Add a new template')
-  .alias('a')
-  .action(() => {
-    require(res('add'));
-  });
-
-program
-  .command('list')
-  .description('List all the templates')
-  .alias('l')
-  .action(() => {
-    require(res('list'));
-  });
+  .usage('<command>')
 
 program
   .command('server')
   .description('Start a devServer')
   .action(() => {
-    require(res('server'));
-  });
+    require(res('server'))
+  })
 
 program
   .command('fetch')
   .description('fetch something')
   .action(() => {
-    require(res('fetch'));
-  });
-
-program
-  .command('init')
-  .description('Generate a new project')
-  .alias('i')
-  .action(() => {
-    require(res('init'));
-  });
+    require(res('fetch'))
+  })
 
 
 program
   .command('dll')
   .description('create dll')
   .action(() => {
-    require(res('dll'));
-  });
+    require(res('dll'))
+  })
 
 program
   .command('build')
   .description('build production')
   .action(() => {
-    require(res('build'));
-  });
+    require(res('build'))
+  })
 
 program
   .command('clean')
   .description('clean outputdir')
   .action(() => {
-    require(res('clean'));
-  });
+    require(res('clean'))
+  })
 
 program
-  .command('delete')
+  .command('addtpl')
+  .description('Add a new template')
+  .action(() => {
+    require(res('addtpl'))
+  })
+
+program
+  .command('template')
+  .description('List all the templates')
+  .alias('tpl')
+  .action(() => {
+    require(res('template'))
+  })
+
+program
+  .command('generate')
+  .description('Generate a new module')
+  .action(() => {
+    require(res('generate'))
+  })
+
+program
+  .command('deletetpl')
   .description('Delete a template')
-  .alias('d')
   .action(() => {
-    require(res('delete'));
-  });
+    require(res('deletetpl'))
+  })
 
-program
-  .command('map')
-  .description('Place files to diffirent position')
-  .alias('m')
-  .action(() => {
-    require(res('map'));
-  });
+// program
+//   .command('map')
+//   .description('Place files to diffirent position')
+//   .alias('m')
+//   .action(() => {
+//     require(res('map'))
+//   })
 
-program.parse(process.argv);
+program.parse(process.argv)
 
 if (!program.args.length) {
-  program.help();
+  program.help()
 }

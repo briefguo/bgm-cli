@@ -9,11 +9,11 @@ module.exports = {
   'parserOptions': {
     'ecmaFeatures': {
       'jsx': true,
-      // lambda表达式
+      // lambda表达式 
       'arrowFunctions': true,
-      // 解构赋值
+      // 解构赋值 
       'destructuring': true,
-      // class
+      // class 
       'classes': true,
       'defaultParams': true,
       // 块级作用域，允许使用let const
@@ -35,11 +35,10 @@ module.exports = {
     },
     'sourceType': 'module'
   },
-  'plugins': ['react'],
   'rules': {
-    //'indent': ['error', 2],
-    //'linebreak-style': ['error', 'unix'],
+    'indent': ['error', 2],
+    'linebreak-style': ['error', 'unix'],
     'comma-dangle': ['error', 'only-multiline'],
-    // 'semi': ['error', 'never'],
-  },
+    'semi': ['error', 'never']
+  }
 }
