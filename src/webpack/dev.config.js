@@ -13,6 +13,7 @@ const _distPath = path.resolve(packageConfig.distPath)
 const _corePath = path.resolve(packageConfig.corePath)
 
 const config = merge(baseConfig, {
+  devtool: 'source-map',
   entry: [
     'webpack/hot/dev-server',
     'webpack-hot-middleware/client?reload=true',
